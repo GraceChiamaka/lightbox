@@ -9,11 +9,11 @@ lightbox.appendChild(lightboxContent);
 
 const buttonLeft = document.createElement('button');
 buttonLeft.className = "btn btn-left";
-buttonLeft.innerHTML = `<i class="fa fa-long-arrow-left"></i>`;
+buttonLeft.innerHTML = `<i class="fa fa-chevron-left"></i>`;
 
 const buttonRight = document.createElement('button');
 buttonRight.className = "btn btn-right";
-buttonRight.innerHTML = `<i class="fa fa-long-arrow-right fa-2x"></i>`;
+buttonRight.innerHTML = `<i class="fa fa-chevron-right"></i>`;
 
 lightboxContent.innerHTML = `
     <div class="lightbox-view-container">
@@ -49,29 +49,54 @@ document.querySelector('.lightbox-view-container').addEventListener('click', (ev
 
 
 const next = () => {
-    let currImg = lightboxView.firstChild;
-    let currIndex;
-    let nextImgSrc = '';
-    let imageContainer = document.querySelector('.grid').children;
-    //console.log(imageContainer, 'all images');
-    
+
     buttonRight.addEventListener('click', (ev) => {
-        console.log(currImg, 'curr img')
+        let currImg = lightboxView.firstChild;
+        let currIndex;
+        let nextIndex;
+        let imageContainer = document.querySelector('.grid').children;
+        
         for (let i = 0; i <= imageContainer.length; i++) {
-            console.log(imageContainer[i].src, 'all images');
-           
             if (imageContainer[i].src === currImg.src) {
-                console.log(i, 'index');
                 currIndex = i;
+                nextIndex = currIndex + 1;
+                if (nextIndex === imageContainer.length) {
+                    buttonRight.setAttribute('disabled', true);
+                    return
+                } else {
+                    currImg.src = imageContainer[nextIndex].src;
+                }
                 return
-            }else{
+            } else {
                 console.log(false);
             }
         }
     });
-    console.log()
+    
 }
 next();
 
 
+const previous = () => {
+    buttonLeft.addEventListener('click', (ev) => {
+        let currImg = lightboxView.firstChild;
+        let currIndex;
+        let prevIndex;
+        let imageContainer = document.querySelector('.grid').children;
+
+        for (let i = 0; i <= imageContainer.length; i++) {
+            if(imageContainer[i].src === currImg.src){
+                currIndex = i;
+                if(currIndex === 0){
+                    buttonLeft.setAttribute('disabled', true);
+                    return;
+                }else{
+                    prevIndex = currIndex - 1;
+                    currImg.src = imageContainer[prevIndex].src;
+                }
+            }
+        }
+    });
+}
+previous();
 

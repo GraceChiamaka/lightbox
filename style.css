@@ -78,6 +78,9 @@
 .btn-right{
     right: 0;
 }
+.btn-right > i:hover{
+    font-size: 30px;
+}
 .btn-left{
     left: 0;
 }
